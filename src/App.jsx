@@ -7,11 +7,19 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Products from "./pages/Products";
 import Cart from "./pages/Cart";
+import AdminPanel from "./pages/AdminPanel";
+import Register from "./pages/Register";
+import CustomerPanel from "./pages/CustomerPanel";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 function Protected({ children }) {
   const { user } = useAuth();
   return user ? children : <Navigate to="/login" replace />;
+}
+
+function AdminProtected({ children }) {
+  const { user } = useAuth();
+  return user?.rol === 'admin' ? children : <Navigate to="/products" replace />;
 }
 
 export default function App() {
@@ -28,10 +36,13 @@ export default function App() {
           <Nav />
           <main className="flex-grow container mx-auto px-4 py-6">
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Products />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/products" element={<Protected><Products /></Protected>} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/products" element={<Products />} />
               <Route path="/cart" element={<Protected><Cart /></Protected>} />
+              <Route path="/admin" element={<AdminProtected><AdminPanel /></AdminProtected>} />
+              <Route path="/customer" element={<Protected><CustomerPanel /></Protected>} />
             </Routes>
           </main>
           <Footer />

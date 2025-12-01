@@ -10,13 +10,23 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    const res = login({ username, password });
-    if (res.ok) {
-      navigate("/products");
-    } else {
-      setErr(res.message || "Error");
+    try {
+      const res = await login({ username, password });
+      if (res.ok) {
+        // Redirigir según el rol del usuario
+        if (res.user?.rol === 'admin') {
+          navigate("/admin");
+        } else {
+          navigate("/products");
+        }
+      } else {
+        setErr(res.message || "Error");
+      }
+    } catch (error) {
+      setErr("Error de conexión");
+      console.error('Error en login:', error);
     }
   };
 
@@ -49,16 +59,26 @@ export default function Login() {
           <button
             type="button"
             onClick={() => {
-              setUsername("admin");
-              setPassword("1234");
+              setUsername("jose");
+              setPassword("admin123");
             }}
             className="px-3 py-2 border rounded"
           >
             Autocompletar (admin)
           </button>
+          <button
+            type="button"
+            onClick={() => {
+              setUsername("juan");
+              setPassword("juan123");
+            }}
+            className="px-3 py-2 border rounded"
+          >
+            Autocompletar (cliente)
+          </button>
         </div>
         <p className="text-sm text-gray-500 mt-3">
-          Credenciales de prueba: <strong>admin / 1234</strong>
+          Credenciales: <strong>jose / admin1234</strong> o <strong>juan / juan123</strong>
         </p>
       </form>
     </div>
