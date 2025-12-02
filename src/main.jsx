@@ -7,7 +7,7 @@ import "./index.css";
 if (sessionStorage.redirect) {
   const redirect = sessionStorage.redirect;
   delete sessionStorage.redirect;
-  window.location.replace(`/#${redirect}`);
+  window.history.replaceState(null, null, redirect);
 }
 
 createRoot(document.getElementById("root")).render(
