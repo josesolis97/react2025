@@ -237,42 +237,42 @@ export default function AdminPanel() {
     setShowForm(true);
   };
 
-  if (user?.rol !== 'admin') {
+    if (user?.rol !== 'admin') {
     return (
-      <div className="max-w-4xl mx-auto p-6 text-center">
-        <h2 className="text-2xl font-bold text-red-600">Acceso Denegado</h2>
-        <p className="text-gray-600 mt-2">No tienes permisos para acceder al panel de administración.</p>
+      <div className="w-full p-4 lg:p-6 text-center">
+        <h2 className="text-xl lg:text-2xl font-bold text-red-600">Acceso Denegado</h2>
+        <p className="text-gray-600 mt-2 text-sm lg:text-base">No tienes permisos para acceder al panel de administración.</p>
       </div>
     );
   }
 
   if (loading) {
-    return <p className="text-center">Cargando...</p>;
+    return <p className="text-center p-4 lg:p-6 text-sm lg:text-base">Cargando...</p>;
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Panel de Administración</h1>
+    <div className="w-full p-4 lg:p-6">
+      <h1 className="text-2xl lg:text-3xl font-bold mb-4 lg:mb-6">Panel de Administración</h1>
       
-      <div className="flex gap-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-4 lg:mb-6">
         <button
           key="products-tab"
           onClick={() => setActiveTab('products')}
-          className={`px-4 py-2 rounded ${activeTab === 'products' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+          className={`px-3 py-2 lg:px-4 rounded text-sm lg:text-base ${activeTab === 'products' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
         >
           Productos ({products.length})
         </button>
         <button
           key="users-tab"
           onClick={() => setActiveTab('users')}
-          className={`px-4 py-2 rounded ${activeTab === 'users' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+          className={`px-3 py-2 lg:px-4 rounded text-sm lg:text-base ${activeTab === 'users' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
         >
           Usuarios ({users.length})
         </button>
         <button
           key="orders-tab"
           onClick={() => setActiveTab('orders')}
-          className={`px-4 py-2 rounded ${activeTab === 'orders' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+          className={`px-3 py-2 lg:px-4 rounded text-sm lg:text-base ${activeTab === 'orders' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
         >
           Pedidos ({orders.length})
         </button>
@@ -280,8 +280,8 @@ export default function AdminPanel() {
 
       {activeTab === 'products' && (
         <div>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">Gestión de Productos</h2>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+            <h2 className="text-lg lg:text-xl font-semibold">Gestión de Productos</h2>
             <button
               onClick={() => {
                 setShowForm(true);
@@ -295,7 +295,7 @@ export default function AdminPanel() {
                   categoria: 'Periféricos'
                 });
               }}
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              className="bg-green-600 text-white px-3 py-2 lg:px-4 rounded hover:bg-green-700 text-sm lg:text-base w-full sm:w-auto"
             >
               Agregar Producto
             </button>
@@ -376,49 +376,50 @@ export default function AdminPanel() {
             </div>
           )}
 
-          <div className="bg-white rounded shadow overflow-hidden">
-            <table className="w-full">
+          <div className="bg-white p-4 lg:p-6 rounded shadow mb-4 lg:mb-6 overflow-x-auto">
+            <table className="w-full min-w-[600px]">
               <thead className="bg-gray-100">
-                <tr key="products-header">
-                  <th className="p-3 text-left">Producto</th>
-                  <th className="p-3 text-left">Categoría</th>
-                  <th className="p-3 text-left">Precio</th>
-                  <th className="p-3 text-left">Stock</th>
-                  <th className="p-3 text-left">Acciones</th>
-                </tr>
+                  <tr key="products-header">
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm">Producto</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm hidden sm:table-cell">Categoría</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm hidden md:table-cell">Precio</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm hidden lg:table-cell">Stock</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm">Acciones</th>
+                  </tr>
               </thead>
               <tbody>
                 {products.map((product) => (
                   <tr key={product.id} className="border-t">
-                    <td className="p-3">
-                      <div className="flex items-center gap-3">
+                    <td className="p-2 lg:p-3">
+                      <div className="flex items-center gap-2 lg:gap-3">
                         <img
                           src={product.imagen}
                           alt={product.nombre}
-                          className="w-12 h-12 object-cover rounded"
+                          className="w-10 h-10 lg:w-12 lg:h-12 object-cover rounded"
                         />
-                        <div>
-                          <div key={`nombre-${product.id}`} className="font-semibold">{product.nombre}</div>
-                          <div key={`descripcion-${product.id}`} className="text-sm text-gray-600">{product.descripcion}</div>
+                        <div className="min-w-0">
+                          <div key={`nombre-${product.id}`} className="font-semibold text-sm lg:text-base truncate">{product.nombre}</div>
+                          <div key={`descripcion-${product.id}`} className="text-xs lg:text-sm text-gray-600 hidden sm:block truncate">{product.descripcion}</div>
+                          <div className="sm:hidden text-xs text-gray-600">${product.precio.toLocaleString()} | Stock: {product.stock}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="p-3">{product.categoria}</td>
-                    <td className="p-3">${product.precio.toLocaleString()}</td>
-                    <td className="p-3">{product.stock}</td>
-                    <td className="p-3">
-                      <div className="flex gap-2">
+                    <td className="p-2 lg:p-3 hidden sm:table-cell text-sm lg:text-base">{product.categoria}</td>
+                    <td className="p-2 lg:p-3 hidden md:table-cell text-sm lg:text-base">${product.precio.toLocaleString()}</td>
+                    <td className="p-2 lg:p-3 hidden lg:table-cell text-sm lg:text-base">{product.stock}</td>
+                    <td className="p-2 lg:p-3">
+                      <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
                         <button
                           key={`edit-${product.id}`}
                           onClick={() => handleEditProduct(product)}
-                          className="text-blue-600 hover:text-blue-800"
+                          className="text-blue-600 hover:text-blue-800 text-xs lg:text-sm"
                         >
                           Editar
                         </button>
                         <button
                           key={`delete-${product.id}`}
                           onClick={() => handleDeleteProduct(product.id)}
-                          className="text-red-600 hover:text-red-800"
+                          className="text-red-600 hover:text-red-800 text-xs lg:text-sm"
                         >
                           Eliminar
                         </button>
@@ -434,8 +435,8 @@ export default function AdminPanel() {
 
       {activeTab === 'users' && (
         <div>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">Gestión de Usuarios</h2>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+            <h2 className="text-lg lg:text-xl font-semibold">Gestión de Usuarios</h2>
             <button
               onClick={() => {
                 setShowUserForm(true);
@@ -452,7 +453,7 @@ export default function AdminPanel() {
                   telefono: ''
                 });
               }}
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              className="bg-green-600 text-white px-3 py-2 lg:px-4 rounded hover:bg-green-700 text-sm lg:text-base w-full sm:w-auto"
             >
               Agregar Usuario
             </button>
@@ -553,36 +554,43 @@ export default function AdminPanel() {
             </div>
           )}
 
-          <div className="bg-white rounded shadow overflow-hidden">
-            <table className="w-full">
+          <div className="bg-white p-4 lg:p-6 rounded shadow mb-4 lg:mb-6 overflow-x-auto">
+            <table className="w-full min-w-[600px]">
               <thead className="bg-gray-100">
-                <tr key="users-header">
-                  <th className="p-3 text-left">Nombre Completo</th>
-                  <th className="p-3 text-left">Usuario</th>
-                  <th className="p-3 text-left">Email</th>
-                  <th className="p-3 text-left">Rol</th>
-                  <th className="p-3 text-left">Estado</th>
-                  <th className="p-3 text-left">Ventas Totales</th>
-                  <th className="p-3 text-left">Contacto</th>
-                  <th className="p-3 text-left">Acciones</th>
-                </tr>
+                  <tr key="users-header">
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm">Nombre</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm hidden sm:table-cell">Usuario</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm hidden md:table-cell">Email</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm hidden lg:table-cell">Rol</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm">Estado</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm hidden xl:table-cell">Ventas</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm hidden 2xl:table-cell">Contacto</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm">Acciones</th>
+                  </tr>
               </thead>
               <tbody>
                 {users.map((user) => (
                   <tr key={user.id} className="border-t">
-                    <td className="p-3 font-semibold">
-                      {user.nombre && user.apellido ? `${user.nombre} ${user.apellido}` : user.username}
+                    <td className="p-2 lg:p-3 font-semibold text-sm lg:text-base">
+                      <div className="truncate">
+                        {user.nombre && user.apellido ? `${user.nombre} ${user.apellido}` : user.username}
+                      </div>
+                      <div className="sm:hidden text-xs text-gray-600 mt-1">
+                        @{user.username}
+                      </div>
                     </td>
-                    <td className="p-3 text-sm text-gray-600">{user.username}</td>
-                    <td className="p-3">{user.email}</td>
-                    <td className="p-3">
+                    <td className="p-2 lg:p-3 text-sm lg:text-base text-gray-600 hidden sm:table-cell">{user.username}</td>
+                    <td className="p-2 lg:p-3 text-sm lg:text-base hidden md:table-cell">
+                      <div className="truncate">{user.email}</div>
+                    </td>
+                    <td className="p-2 lg:p-3 hidden lg:table-cell">
                       <span className={`px-2 py-1 rounded text-xs ${
                         user.rol === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'
                       }`}>
                         {user.rol}
                       </span>
                     </td>
-                    <td className="p-3">
+                    <td className="p-2 lg:p-3">
                       <button
                         onClick={() => handleToggleUserStatus(user)}
                         className={`px-2 py-1 rounded text-xs ${
@@ -592,19 +600,19 @@ export default function AdminPanel() {
                         {user.activo ? 'Activo' : 'Inactivo'}
                       </button>
                     </td>
-                    <td className="p-3 font-semibold text-green-600">
+                    <td className="p-2 lg:p-3 font-semibold text-green-600 text-sm lg:text-base hidden xl:table-cell">
                       ${calculateTotalSales(user.id).toLocaleString()}
                     </td>
-                    <td className="p-3 text-sm text-gray-600">
-                      <div key={`direccion-${user.id}`}>{user.direccion}</div>
-                      <div key={`telefono-${user.id}`}>{user.telefono}</div>
+                    <td className="p-2 lg:p-3 text-sm lg:text-base text-gray-600 hidden 2xl:table-cell">
+                      <div key={`direccion-${user.id}`} className="truncate">{user.direccion}</div>
+                      <div key={`telefono-${user.id}`} className="truncate">{user.telefono}</div>
                     </td>
-                    <td className="p-3">
-                      <div className="flex gap-2">
+                    <td className="p-2 lg:p-3">
+                      <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
                         <button
                           key={`edit-${user.id}`}
                           onClick={() => handleEditUser(user)}
-                          className="text-blue-600 hover:text-blue-800"
+                          className="text-blue-600 hover:text-blue-800 text-xs lg:text-sm"
                         >
                           Editar
                         </button>
@@ -612,7 +620,7 @@ export default function AdminPanel() {
                           <button
                             key={`delete-${user.id}`}
                             onClick={() => handleDeleteUser(user.id)}
-                            className="text-red-600 hover:text-red-800"
+                            className="text-red-600 hover:text-red-800 text-xs lg:text-sm"
                           >
                             Eliminar
                           </button>
@@ -629,43 +637,46 @@ export default function AdminPanel() {
 
       {activeTab === 'orders' && (
         <div>
-          <h2 className="text-xl font-semibold mb-4">Gestión de Pedidos</h2>
+          <h2 className="text-lg lg:text-xl font-semibold mb-4">Gestión de Pedidos</h2>
           {orders.length === 0 ? (
-            <div className="bg-white p-6 rounded shadow text-center">
+            <div className="bg-white p-4 lg:p-6 rounded shadow text-center">
               <p className="text-gray-500">No hay pedidos registrados</p>
             </div>
           ) : (
-            <div className="bg-white rounded shadow overflow-hidden">
-              <table className="w-full">
+            <div className="bg-white p-4 lg:p-6 rounded shadow overflow-x-auto">
+              <table className="w-full min-w-[700px]">
                 <thead className="bg-gray-100">
                   <tr key="orders-header">
-                    <th className="p-3 text-left">ID Pedido</th>
-                    <th className="p-3 text-left">Cliente</th>
-                    <th className="p-3 text-left">Fecha</th>
-                    <th className="p-3 text-left">Total</th>
-                    <th className="p-3 text-left">Estado</th>
-                    <th className="p-3 text-left">Productos</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm">ID</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm">Cliente</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm hidden sm:table-cell">Fecha</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm hidden md:table-cell">Total</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm">Estado</th>
+                    <th className="p-2 lg:p-3 text-left text-xs lg:text-sm hidden lg:table-cell">Productos</th>
                   </tr>
                 </thead>
                 <tbody>
                   {orders.map((order) => (
                     <tr key={`${order.userId}-${order.id}`} className="border-t">
-                      <td className="p-3 font-mono text-sm">#{order.id}</td>
-                      <td className="p-3">
+                      <td className="p-2 lg:p-3 font-mono text-xs lg:text-sm">#{order.id}</td>
+                      <td className="p-2 lg:p-3">
                         <div key={`customer-${order.userId}`}>
-                          <div className="font-semibold">
+                          <div className="font-semibold text-sm lg:text-base truncate">
                             {order.userNombre && order.userApellido ? 
                               `${order.userNombre} ${order.userApellido}` : 
                               order.username
                             }
                           </div>
-                          <div className="text-sm text-gray-600">@{order.username}</div>
-                          <div className="text-sm text-gray-600">{order.userEmail}</div>
+                          <div className="text-xs lg:text-sm text-gray-600">@{order.username}</div>
+                          <div className="text-xs lg:text-sm text-gray-600 hidden sm:block truncate">{order.userEmail}</div>
+                          <div className="sm:hidden text-xs text-gray-600">
+                            ${order.total.toLocaleString()}
+                          </div>
                         </div>
                       </td>
-                      <td className="p-3">{new Date(order.fecha).toLocaleDateString()}</td>
-                      <td className="p-3 font-semibold">${order.total.toLocaleString()}</td>
-                      <td className="p-3">
+                      <td className="p-2 lg:p-3 text-sm lg:text-base hidden sm:table-cell">{new Date(order.fecha).toLocaleDateString()}</td>
+                      <td className="p-2 lg:p-3 font-semibold text-sm lg:text-base hidden md:table-cell">${order.total.toLocaleString()}</td>
+                      <td className="p-2 lg:p-3">
                         <span className={`px-2 py-1 rounded text-xs ${
                           order.estado === 'completado' ? 'bg-green-100 text-green-800' :
                           order.estado === 'pendiente' ? 'bg-yellow-100 text-yellow-800' :
@@ -674,7 +685,7 @@ export default function AdminPanel() {
                           {order.estado || 'pendiente'}
                         </span>
                       </td>
-                      <td className="p-3">
+                      <td className="p-2 lg:p-3 hidden lg:table-cell">
                         <div key={`products-${order.id}`} className="text-sm">
                           {order.productos?.map((product, index) => (
                             <div key={`${order.id}-product-${index}`} className="mb-1">
