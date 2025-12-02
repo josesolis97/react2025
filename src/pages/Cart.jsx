@@ -96,9 +96,6 @@ export default function Cart() {
       clearCart();
       alert('¡Compra finalizada con éxito! Stock actualizado.');
       
-      // 5. Refrescar productos para mostrar stock actualizado
-      window.location.reload(); // O mejor: usar un callback para refrescar productos
-      
       navigate('/customer');
     } catch (error) {
       console.error('Error en checkout:', error);
