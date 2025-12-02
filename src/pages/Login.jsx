@@ -25,8 +25,7 @@ export default function Login() {
         setErr(res.message || "Error");
       }
     } catch (error) {
-      setErr("Error de conexión");
-      console.error('Error en login:', error);
+      setErr('Error de conexión al iniciar sesión. Por favor intenta nuevamente.');
     }
   };
 

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 export default function AdminPanel() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
   const [orders, setOrders] = useState([]);
   const [activeTab, setActiveTab] = useState('products');
-  const [loading, setLoading] = useState(true);
+  const [dataLoading, setDataLoading] = useState(true);
   const [editingProduct, setEditingProduct] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
@@ -57,7 +57,7 @@ export default function AdminPanel() {
       
       setOrders(allOrders);
     } catch (error) {
-      console.error('Error al obtener pedidos:', error);
+      alert('Error al cargar los pedidos. Por favor recarga la página.');
     }
   };
 
@@ -72,7 +72,7 @@ export default function AdminPanel() {
       const users = await response.json();
       setUsers(users);
     } catch (error) {
-      console.error('Error al obtener usuarios:', error);
+      alert('Error al cargar los usuarios. Por favor recarga la página.');
     }
   };
 
@@ -82,15 +82,15 @@ export default function AdminPanel() {
       const products = await response.json();
       setProducts(products);
     } catch (error) {
-      console.error('Error al obtener productos:', error);
+      alert('Error al cargar los productos. Por favor recarga la página.');
     }
   };
 
   useEffect(() => {
     const loadData = async () => {
-      setLoading(true);
+      setDataLoading(true);
       await Promise.all([fetchProducts(), fetchUsers(), fetchOrders()]);
-      setLoading(false);
+      setDataLoading(false);
     };
     loadData();
   }, []);
@@ -129,7 +129,7 @@ export default function AdminPanel() {
         });
       }
     } catch (error) {
-      console.error('Error al guardar usuario:', error);
+      alert('Error al guardar el usuario. Por favor intenta nuevamente.');
     }
   };
 
@@ -141,7 +141,7 @@ export default function AdminPanel() {
         });
         await fetchUsers();
       } catch (error) {
-        console.error('Error al eliminar usuario:', error);
+        alert('Error al eliminar el usuario. Por favor intenta nuevamente.');
       }
     }
   };
@@ -171,7 +171,7 @@ export default function AdminPanel() {
       });
       await fetchUsers();
     } catch (error) {
-      console.error('Error al cambiar estado:', error);
+      alert('Error al cambiar el estado del usuario. Por favor intenta nuevamente.');
     }
   };
 
@@ -207,7 +207,7 @@ export default function AdminPanel() {
         });
       }
     } catch (error) {
-      console.error('Error al guardar producto:', error);
+      alert('Error al guardar el producto. Por favor intenta nuevamente.');
     }
   };
 
@@ -219,7 +219,7 @@ export default function AdminPanel() {
         });
         await fetchProducts();
       } catch (error) {
-        console.error('Error al eliminar producto:', error);
+        alert('Error al eliminar el producto. Por favor intenta nuevamente.');
       }
     }
   };
@@ -237,6 +237,10 @@ export default function AdminPanel() {
     setShowForm(true);
   };
 
+  if (loading) {
+    return <div className="text-center mt-4">Cargando autenticación...</div>;
+  }
+
     if (user?.rol !== 'admin') {
     return (
       <div className="container mt-4">
@@ -250,8 +254,8 @@ export default function AdminPanel() {
     );
   }
 
-  if (loading) {
-    return <p className="text-center mt-4">Cargando...</p>;
+  if (dataLoading) {
+    return <p className="text-center mt-4">Cargando datos...</p>;
   }
 
   return (

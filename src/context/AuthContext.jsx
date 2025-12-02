@@ -9,6 +9,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null); 
   const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Cargar datos guardados en localStorage al iniciar
   useEffect(() => {
@@ -16,6 +17,7 @@ export function AuthProvider({ children }) {
     const savedCart = localStorage.getItem('cart');
     if (savedUser) setUser(JSON.parse(savedUser));
     if (savedCart) setCart(JSON.parse(savedCart));
+    setLoading(false);
   }, []);
 
  // Guardar carrito en localStorage cuando cambie
@@ -73,8 +75,7 @@ export function AuthProvider({ children }) {
       setUser(userData);
       return { ok: true, user: userData };
     } catch (error) {
-      console.error('Error en login:', error);
-      return { ok: false, message: "Error de conexión" };
+      return { ok: false, message: "Error de conexión al iniciar sesión. Por favor intenta nuevamente." };
     }
   };
 
@@ -124,6 +125,7 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         user,
+        loading,
         login,
         logout,
         cart,

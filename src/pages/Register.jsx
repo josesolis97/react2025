@@ -80,8 +80,7 @@ export default function Register() {
         setError('Error al crear el usuario');
       }
     } catch (error) {
-      console.error('Error en registro:', error);
-      setError('Error de conexión');
+      setError('Error de conexión al registrar. Por favor intenta nuevamente.');
     } finally {
       setLoading(false);
     }

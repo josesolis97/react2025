@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 export default function CustomerPanel() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [ordersLoading, setOrdersLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserOrders = async () => {
@@ -16,10 +16,9 @@ export default function CustomerPanel() {
         if (currentUser && currentUser.pedidos) {
           setOrders(currentUser.pedidos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha)));
         }
-        setLoading(false);
+        setOrdersLoading(false);
       } catch (error) {
-        console.error('Error al obtener pedidos:', error);
-        setLoading(false);
+        setOrdersLoading(false);
       }
     };
 
@@ -27,6 +26,10 @@ export default function CustomerPanel() {
       fetchUserOrders();
     }
   }, [user]);
+
+  if (loading) {
+    return <div className="text-center mt-4">Cargando autenticación...</div>;
+  }
 
   if (!user) {
     return (
@@ -41,8 +44,8 @@ export default function CustomerPanel() {
     );
   }
 
-  if (loading) {
-    return <p className="text-center mt-4">Cargando...</p>;
+  if (ordersLoading) {
+    return <p className="text-center mt-4">Cargando pedidos...</p>;
   }
 
   return (

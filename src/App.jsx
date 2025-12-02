@@ -13,12 +13,18 @@ import CustomerPanel from "./pages/CustomerPanel";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 function Protected({ children }) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  if (loading) {
+    return <div className="text-center mt-4">Cargando...</div>;
+  }
   return user ? children : <Navigate to="/login" replace />;
 }
 
 function AdminProtected({ children }) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  if (loading) {
+    return <div className="text-center mt-4">Cargando...</div>;
+  }
   return user?.rol === 'admin' ? children : <Navigate to="/products" replace />;
 }
 

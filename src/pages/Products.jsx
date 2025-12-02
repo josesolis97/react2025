@@ -19,7 +19,7 @@ export default function Products() {
     setLoading(true);
     fetch(`https://68d5d2a1e29051d1c0afa80c.mockapi.io/api/v1/productos`)
       .then((res) => {
-        if (!res.ok) throw new Error("Error en la red");
+        if (!res.ok) throw new Error("Error al cargar los productos");
         return res.json();
       })
       .then((response) => {
@@ -45,7 +45,7 @@ export default function Products() {
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Error al cargar productos:", err);
+        alert('Error al cargar los productos. Por favor recarga la página.');
         setAllProducts([]);
         setProducts([]);
         setLoading(false);

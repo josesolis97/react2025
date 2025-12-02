@@ -15,15 +15,11 @@ export default function Cart() {
     try {
       // 1. Actualizar stock de productos
       for (const item of cart) {
-        console.log('Procesando producto:', item);
         const productResponse = await fetch(`https://68d5d2a1e29051d1c0afa80c.mockapi.io/api/v1/productos/${item.id}`);
         const product = await productResponse.json();
         
-        console.log('Producto encontrado:', product);
         const itemCantidad = item.cantidad || item.quantity;
         const newStock = product.stock - itemCantidad;
-        
-        console.log(`Stock actual: ${product.stock}, Cantidad: ${itemCantidad}, Nuevo stock: ${newStock}`);
         
         if (newStock < 0) {
           alert(`No hay suficiente stock para ${item.nombre || item.name}. Stock disponible: ${product.stock}`);
@@ -36,12 +32,9 @@ export default function Cart() {
           body: JSON.stringify({ ...product, stock: newStock })
         });
         
-        console.log(`Stock actualizado para producto ${item.id}: ${newStock}`);
-        
         // Verificar que se actualizó correctamente
         const verifyResponse = await fetch(`https://68d5d2a1e29051d1c0afa80c.mockapi.io/api/v1/productos/${item.id}`);
-        const verifyProduct = await verifyResponse.json();
-        console.log('Verificación de stock actualizado:', verifyProduct.stock);
+        await verifyResponse.json();
       }
 
       // 2. Crear pedido
@@ -64,13 +57,6 @@ export default function Cart() {
       const users = await usersResponse.json();
       const currentUser = users.find(u => u.username === user.username);
       
-      console.log('Usuario logueado:', user);
-      console.log('Usuarios encontrados:', users);
-      console.log('Usuario encontrado:', currentUser);
-      console.log('ID del usuario encontrado:', currentUser?.id);
-      console.log('Keys del usuario encontrado:', Object.keys(currentUser || {}));
-      console.log('Usuario completo:', JSON.stringify(currentUser, null, 2));
-      
       if (currentUser && currentUser.id) {
         const pedidos = currentUser.pedidos || [];
         pedidos.push(newOrder);
@@ -81,13 +67,9 @@ export default function Cart() {
           body: JSON.stringify({ ...currentUser, pedidos })
         });
         
-        console.log('Pedido guardado exitosamente');
-        console.log('Pedidos actualizados:', pedidos);
-        
         // Verificar que el pedido se guardó
         const verifyUserResponse = await fetch(`https://68d5d2a1e29051d1c0afa80c.mockapi.io/api/v1/usuarios/${currentUser.id}`);
-        const verifyUser = await verifyUserResponse.json();
-        console.log('Verificación de pedidos guardados:', verifyUser.pedidos);
+        await verifyUserResponse.json();
       } else {
         throw new Error('Usuario no encontrado o sin ID válido');
       }
@@ -98,7 +80,6 @@ export default function Cart() {
       
       navigate('/customer');
     } catch (error) {
-      console.error('Error en checkout:', error);
       alert('Error al procesar la compra. Por favor intenta nuevamente.');
     }
   };
