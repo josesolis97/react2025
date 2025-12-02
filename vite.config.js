@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/curso_react_js_25236/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',

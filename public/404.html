@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirigiendo...</title>
+    <script>
+        // Redirigir todas las rutas al index.html con el hash
+        sessionStorage.redirect = location.pathname + location.search;
+        location.replace('/curso_react_js_25236/#' + location.pathname + location.search);
+    </script>
+</head>
+<body>
+    <p>Redirigiendo a la aplicación...</p>
+</body>
+</html>
