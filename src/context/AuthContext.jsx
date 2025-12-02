@@ -10,7 +10,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null); 
   const [cart, setCart] = useState([]);
 
-  
+  // Cargar datos guardados en localStorage al iniciar
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     const savedCart = localStorage.getItem('cart');
@@ -18,12 +18,12 @@ export function AuthProvider({ children }) {
     if (savedCart) setCart(JSON.parse(savedCart));
   }, []);
 
- 
+ // Guardar carrito en localStorage cuando cambie
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
-  
+  // Guardar usuario en localStorage cuando cambie
   useEffect(() => {
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));
@@ -60,6 +60,7 @@ export function AuthProvider({ children }) {
         return { ok: false, message: "Usuario inactivo. Contacte al administrador." };
       }
       
+      // Crear objeto de usuario sin datos sensibles
       const userData = {
         username: user.username,
         email: user.email,
@@ -83,32 +84,39 @@ export function AuthProvider({ children }) {
 
   const addToCart = (product) => {
     setCart(prev => {
+      // Verificar si el producto ya existe en el carrito
       const existingItem = prev.find(item => item.id === product.id);
       if (existingItem) {
+        // Si existe, incrementar cantidad
         return prev.map(item =>
           item.id === product.id
             ? { ...item, cantidad: (item.cantidad || 1) + 1 }
             : item
         );
       } else {
+        // Si no existe, agregar con cantidad 1
         return [...prev, { ...product, cantidad: 1 }];
       }
     });
   };
 
   const removeFromCart = (id) => {
+    // Eliminar producto del carrito por ID
     setCart(prev => prev.filter(item => item.id !== id));
   };
 
   const clearCart = () => {
+    // Vaciar todo el carrito
     setCart([]);
   };
 
   const getTotalItems = () => {
+    // Calcular cantidad total de items en el carrito
     return cart.reduce((sum, item) => sum + (item.cantidad || 0), 0);
   };
 
   const getTotalPrice = () => {
+    // Calcular precio total del carrito
     return cart.reduce((sum, item) => sum + ((item.precio || 0) * (item.cantidad || 0)), 0);
   };
 

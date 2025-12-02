@@ -9,7 +9,7 @@ export default function Nav() {
   return (
     <nav className="bg-gray-100 border-b sticky top-16 sm:top-auto z-40">
       <div className="container mx-auto px-2 sm:px-4">
-        {/* Desktop Navigation */}
+        {/* Navegación Desktop */}
         <div className="hidden sm:flex items-center justify-between py-3">
           <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
             <Link 
@@ -51,15 +51,15 @@ export default function Nav() {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Navegación Móvil */}
         <div className="sm:hidden">
-          {/* Mobile Menu Button */}
+          {/* Botón de menú móvil */}
           <div className="flex items-center justify-between py-3">
             <span className="text-gray-600 font-medium">Menú</span>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-md hover:bg-gray-200 transition-colors active:scale-95"
-              aria-label="Navigation Menu"
+              aria-label="Menú de Navegación"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {mobileMenuOpen ? (
@@ -71,7 +71,7 @@ export default function Nav() {
             </button>
           </div>
 
-          {/* Mobile Menu Items */}
+          {/* Items del menú móvil */}
           {mobileMenuOpen && (
             <div className="py-3 border-t border-gray-300">
               <div className="flex flex-col gap-2">

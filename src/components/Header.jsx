@@ -12,14 +12,14 @@ export default function Header() {
     <header className="bg-blue-600 text-white shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-2 sm:px-4">
         <div className="flex items-center justify-between h-16 sm:h-auto py-2 sm:py-4">
-          {/* Logo/Title */}
+          {/* Logo/Título de la aplicación */}
           <div className="flex items-center">
             <h1 className="text-lg sm:text-xl font-bold line-clamp-2">
               <span className="hidden sm:inline">Curso 25236- </span>Tienda React Js
             </h1>
           </div>
 
-          {/* Desktop Navigation */}
+          {/* Navegación Desktop */}
           <div className="hidden sm:flex items-center gap-3 sm:gap-4">
             <div className="text-sm sm:text-base">
               Carrito: <strong className="text-yellow-300">{isNaN(totalItems) ? 0 : totalItems}</strong>
@@ -46,12 +46,12 @@ export default function Header() {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Botón de menú móvil */}
           <div className="sm:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-md hover:bg-blue-700 transition-colors active:scale-95"
-              aria-label="Menu"
+              aria-label="Menú"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {mobileMenuOpen ? (
@@ -64,7 +64,7 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Menú móvil */}
         {mobileMenuOpen && (
           <div className="sm:hidden py-4 border-t border-blue-500">
             <div className="flex flex-col gap-4">
